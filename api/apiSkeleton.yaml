@@ -1,0 +1,34 @@
+openapi: "3.0.3"
+info:
+  version: 1.0.0
+  title: Python Lambda API Demo
+  description: API's demo'ing integration techniques
+
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+  params-only:
+    validateRequestBody: false
+    validateRequestParameters: true
+  body-only:
+    validateRequestBody: true
+    validateRequestParameters: false
+
+paths:
+
+  /widget:
+    $ref: './paths/widget/widgetPut.yaml'
+
+  /widget/{widgetName}:
+    $ref: './paths/widget/widgetWIdGetNameGet.yaml'
+
+  /reports/filterpage:
+    $ref: './paths/reports/reportsFilterPage.yaml'
+
+  /reports/color/{color}:
+    $ref: './paths/reports/reportsColor.yaml'
+
+
+
+

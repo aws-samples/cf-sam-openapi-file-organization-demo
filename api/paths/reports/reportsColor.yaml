@@ -1,0 +1,55 @@
+get:
+  description: Get widgets by color
+  parameters:
+    - in: path
+      $ref: '../../requestParameters/color.yaml'
+  responses:
+    200:
+      description: Get All The Widgets of a color
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/widgetList.yaml'
+    400:
+      description: Malformed Request
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+    500:
+      description: Internal Service Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+  x-amazon-apigateway-integration:
+    requestTemplates:
+      "application/json": |
+          { "path": "$context.path",
+            "user-id": "$context.identity.userArn",
+            "color": "$method.request.path.color" }
+    passthroughBehavior: "never"
+    responses:
+      default:
+        statusCode: "200"
+        responseTemplates:
+          "application/json": |
+            #set($inputRoot = $input.path('$'))
+            {
+              "widgetList": [
+                #foreach($elem in $inputRoot)
+                  {"widgetName" : "$elem.widgetName",
+                  "color" : "$elem.color"}
+                #if($foreach.hasNext),#end
+                #end
+              ]
+            }
+      NotFound.*:
+        $ref: "../../gatewayResponses/notFound.yaml"
+      .*error.*:
+        $ref: "../../gatewayResponses/error.yaml"
+    uri:
+      Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ReportsColorLambda.Arn}/invocations
+    httpMethod: POST
+    type: "aws"
+  x-amazon-apigateway-request-validator: "all"

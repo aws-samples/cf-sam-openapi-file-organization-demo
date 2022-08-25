@@ -1,0 +1,6 @@
+skips:
+  - "B101"
+exclude:
+  - .venv
+  - .aws-sam
+  - venv

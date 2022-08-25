@@ -1,0 +1,10 @@
+type: object
+properties:
+  next:
+    $ref: '../fields/metadata/next.yaml'
+  count:
+    $ref: '../fields/metadata/count.yaml'
+  previous:
+    $ref: '../fields/metadata/previous.yaml'
+  message:
+    $ref: '../fields/metadata/message.yaml'

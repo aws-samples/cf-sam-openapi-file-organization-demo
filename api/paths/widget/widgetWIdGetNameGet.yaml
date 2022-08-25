@@ -1,0 +1,58 @@
+get:
+  description: "Get a widget's name"
+  parameters:
+     - in: path
+       $ref: '../../requestParameters/widgetName.yaml'
+  responses:
+    200:
+      description: Get a specific widget
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/widget.yaml'
+    400:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+    406:
+      description: Malformed Request
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+    500:
+      description: Internal Service Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+  x-amazon-apigateway-integration:
+    requestTemplates:
+      "application/json": |
+            { "path": "$context.path",
+              "user-id": "$context.identity.userArn",
+              "widgetName": "$method.request.path.widgetName" }
+    passthroughBehavior: "never"
+    responses:
+      default:
+        statusCode: "200"
+        responseTemplates:
+          "application/json": |
+            #set($inputRoot = $input.path('$'))
+            {
+              "widgetName" : "$inputRoot.widgetName",
+              "color" : "$inputRoot.color"}
+            }
+      NotFound.*:
+        $ref: "../../gatewayResponses/NotAcceptable.yaml"
+      NotAcceptable.*:
+        $ref: "../../gatewayResponses/notFound.yaml"
+      .*error.*:
+        $ref: "../../gatewayResponses/error.yaml"
+    uri:
+      Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${widgetGetLambda.Arn}/invocations
+    httpMethod: POST
+    type: "aws"
+  x-amazon-apigateway-request-validator: "all"

@@ -1,0 +1,14 @@
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: pylambda/widget/get
+      Role: !GetAtt widgetGetLambdaRole.Arn
+      Layers:
+        - !Ref lambdaDdbEnvLayer
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /widget/{name}
+            Method: get
+            RestApiId:
+              Ref: WidgetApi

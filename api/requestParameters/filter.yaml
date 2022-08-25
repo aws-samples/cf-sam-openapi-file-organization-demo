@@ -1,0 +1,5 @@
+      name: filter
+      schema:
+        type: string
+      description: "Filter to use when retrieving data from the DB"
+      example: "widgetName"

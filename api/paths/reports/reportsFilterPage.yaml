@@ -1,0 +1,66 @@
+get:
+  description: Get the system preferences
+  parameters:
+    - in: query
+      $ref: '../../requestParameters/limit.yaml'
+    - in: query
+      $ref: '../../requestParameters/lastKey.yaml'
+    - in: query
+      $ref: '../../requestParameters/filter.yaml'
+  responses:
+    200:
+      description: Get All The Widgets
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/widgetList.yaml'
+    400:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+    500:
+      description: Internal Service Error
+      content:
+        application/json:
+          schema:
+            $ref: '../../schemas/error.yaml'
+  x-amazon-apigateway-integration:
+    passthroughBehavior: "never"
+    requestTemplates:
+      "application/json": |
+        #set ($root=$input.path('$'))
+        { "limit": "$method.request.querystring.limit",
+          "lastKey": "$method.request.querystring.lastKey",
+          "filter": "$method.request.querystring.filter"
+        }
+    responses:
+      default:
+        statusCode: "200"
+        responseTemplates:
+          "application/json": |
+            #set($inputRoot = $input.path('$'))
+            {
+              "widgetList": [
+                #foreach($elem in $inputRoot.widgetList)
+                  {"widgetName" : "$elem.widgetName",
+                  "color" : "$elem.color"}
+                #if($foreach.hasNext),#end
+                #end
+              ]
+              "metadata": {
+                "next" : $inputRoot.metadata.next
+                "count" : $inputRoot.metadata.count
+                "previous" :  $inputRoot.metadata.previous
+                }
+            }
+      NotFound.*:
+        $ref: "../../gatewayResponses/notFound.yaml"
+      .*error.*:
+        $ref: "../../gatewayResponses/error.yaml"
+    uri:
+      Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${reportsFilterPageLambda.Arn}/invocations
+    httpMethod: POST
+    type: "aws"
+  x-amazon-apigateway-request-validator: "all"

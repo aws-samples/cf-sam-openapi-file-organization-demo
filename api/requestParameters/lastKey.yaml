@@ -1,0 +1,5 @@
+      name: lastKey
+      schema:
+        type: string
+      description: "The key returned by the last call in metadata.lastKey, to index to the next page"
+      example: "testKey"

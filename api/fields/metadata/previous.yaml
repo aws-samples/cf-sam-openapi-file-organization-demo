@@ -1,0 +1,3 @@
+    type: string
+    description: "The pagination key of the current page"
+    eaxmple: "testkey"

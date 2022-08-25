@@ -1,0 +1,6 @@
+      name: color
+      schema:
+         type: string
+      required: true
+      description: "Color of the widget"
+      example: "Red"

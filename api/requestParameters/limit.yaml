@@ -1,0 +1,5 @@
+      name: limit
+      schema:
+        type: integer
+      description: "The maximum number of records to return"
+      example: 20

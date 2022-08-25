@@ -1,0 +1,6 @@
+type: object
+properties:
+  metadata:
+    $ref: './metadata.yaml'
+  widgetList:
+    $ref: './widgetList.yaml'

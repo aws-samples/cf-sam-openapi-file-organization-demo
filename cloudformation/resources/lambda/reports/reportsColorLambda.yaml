@@ -1,0 +1,14 @@
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: pylambda/reports/color
+      Role: !GetAtt reportsColorLambdaRole.Arn
+      Layers:
+        - !Ref lambdaDdbEnvLayer
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /reports/color/{color}
+            Method: get
+            RestApiId:
+              Ref: WidgetApi

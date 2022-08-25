@@ -1,0 +1,3 @@
+    type: string
+    description: "Error or query messages"
+    example: "Missing required request parameters: [color]"

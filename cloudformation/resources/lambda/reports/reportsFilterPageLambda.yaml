@@ -1,0 +1,14 @@
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: pylambda/reports/filterpage
+      Role: !GetAtt reportsFilterPageLambdaRole.Arn
+      Layers:
+        - !Ref lambdaDdbEnvLayer
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /reports/filterpage
+            Method: get
+            RestApiId:
+              Ref: WidgetApi

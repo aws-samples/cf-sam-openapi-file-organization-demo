@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Widget API Service
+
+  Service Creation API Integration Demo
+
+Globals:
+  Function:
+    Handler: app.lambda_handler
+    Runtime: python3.8
+    MemorySize: 256
+    Timeout: 30
+    Tracing: Active
+    Environment:
+      Variables:
+        DynamoName: !Ref WidgetDdbTable
+        DynamoPartitionKey: PK
+        DynamoDefaultLimit: 1000
+        DynamoIndexColor: Widget-by-Color
+        DynamoIndexColorKey: color
+
+Resources:
+
+# Api Gateways
+    WidgetApi:
+        !Include ./resources/apigw/widgetApiGw.yaml
+
+#DynamoDB
+    WidgetDdbTable:
+        !Include ./resources/dynamodb/widgetDdbTable.yaml
+
+# Layers
+    lambdaDdbEnvLayer:
+        !Include ./resources/lambda/layers/lambdaDdbEnv.yaml
+
+# Report Lambdas & Roles
+    reportsFilterPageLambda:
+        !Include ./resources/lambda/reports/reportsFilterPageLambda.yaml
+
+    reportsFilterPageLambdaRole:
+        !Include ./resources/lambda/reports/reportsFilterPageLambdaRole.yaml
+
+    ReportsColorLambda:
+        !Include ./resources/lambda/reports/reportsColorLambda.yaml
+
+    reportsColorLambdaRole:
+        !Include ./resources/lambda/reports/reportsColorLambdaRole.yaml
+
+# Widget Lambdas & Roles
+    widgetGetLambda:
+        !Include ./resources/lambda/widget/widgetGetLambda.yaml
+
+    widgetGetLambdaRole:
+        !Include ./resources/lambda/widget/widgetGetLambdaRole.yaml
+
+    widgetPutLambda:
+        !Include ./resources/lambda/widget/widgetPutLambda.yaml
+
+    WidgetPutLambdaRole:
+        !Include ./resources/lambda/widget/widgetPutLambdaRole.yaml
+
+
+# Outputs
+
+Outputs:
+  baseUrl:
+    Value: !Sub 'https://${WidgetApi}.execute-api.${AWS::Region}.amazonaws.com/prod'
+  ddbTable:
+    Value: !Ref WidgetDdbTable

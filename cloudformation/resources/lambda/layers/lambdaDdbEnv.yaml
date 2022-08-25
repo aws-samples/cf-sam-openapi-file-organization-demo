@@ -1,0 +1,9 @@
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName:
+        !Sub ${AWS::StackName}-lambdaDdbEnvLayer
+      Description: Environment Layer for DDB
+      ContentUri: pylambda/layers/LambdaDdbEnv
+      CompatibleRuntimes:
+        - python3.8
+      RetentionPolicy: Delete

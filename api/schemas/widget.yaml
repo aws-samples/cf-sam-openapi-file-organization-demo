@@ -1,0 +1,6 @@
+type: object
+properties:
+  widgetName:
+    $ref: '../fields/widgetName.yaml'
+  color:
+    $ref: '../fields/color.yaml'

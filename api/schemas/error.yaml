@@ -1,0 +1,4 @@
+type: object
+properties:
+  Error:
+    $ref: '../fields/metadata/message.yaml'

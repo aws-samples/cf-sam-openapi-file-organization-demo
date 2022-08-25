@@ -1,0 +1,14 @@
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: pylambda/widget/put
+      Role: !GetAtt WidgetPutLambdaRole.Arn
+      Layers:
+        - !Ref lambdaDdbEnvLayer
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /widget
+            Method: put
+            RestApiId:
+              Ref: WidgetApi

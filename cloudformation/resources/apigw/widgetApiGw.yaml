@@ -1,0 +1,11 @@
+    Type: AWS::Serverless::Api
+    Properties:
+      DefinitionBody:
+        Fn::Transform:
+          Name: AWS::Include
+          Parameters:
+            Location: api/api.yaml
+      EndpointConfiguration:
+        Type: REGIONAL
+      StageName: prod
+      TracingEnabled: true

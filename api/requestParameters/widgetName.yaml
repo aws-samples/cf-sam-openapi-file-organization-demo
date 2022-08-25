@@ -1,0 +1,5 @@
+      name: widgetName
+      schema:
+         type: string
+      required: true
+      description: Name of the widget

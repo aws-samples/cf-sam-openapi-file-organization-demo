@@ -1,0 +1,14 @@
+---
+RulesToSuppress:
+  - id: W68
+    reason: Project does not leverage an API Gateway Usage Plan at this time
+  - id: W64
+    reason: Project does not leverage an API Gateway Usage Plan at this time
+  - id: W89
+    reason: Project does not utilize a VPC
+  - id: W92
+    reason: Lambda reserved concurrent connections not required for application performance
+  - id: W69
+    reason: API Stage logging is passed through the SAM template, this is a false positive
+  - id: W78
+    reason: DynamoDB table backup not required
