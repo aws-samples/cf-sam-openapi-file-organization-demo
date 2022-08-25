@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 import boto3
 from botocore.exceptions import ClientError
-from moto import mock_dynamodb2
+from moto import mock_dynamodb
 
 # Common test helper utilities for setup
 from tests.env_setup_for_tests import env_setup_for_tests
@@ -26,7 +26,7 @@ from pylambda.reports.filterPage.app import lambda_handler
 from pylambda.reports.filterPage.app import widget_get
 
 
-@mock_dynamodb2
+@mock_dynamodb
 class TestReportsFilterPage(unittest.TestCase):
     """
     Test Suite for /reports/filterPage

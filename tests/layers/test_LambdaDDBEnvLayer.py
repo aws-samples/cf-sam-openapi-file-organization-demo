@@ -6,7 +6,7 @@
 import unittest
 
 import boto3
-from moto import mock_dynamodb2
+from moto import mock_dynamodb
 
 # Common test helper utilities for setup
 from tests.env_setup_for_tests import env_setup_for_tests
@@ -15,7 +15,7 @@ from tests.env_setup_for_tests import create_mock_widget_ddb_table
 from pylambda.layers.lambdaDdbEnv.python.lambdaDdbEnvLayer import EnvParams
 
 
-@mock_dynamodb2
+@mock_dynamodb
 class TestLambdaDdbEnvLayer(unittest.TestCase):
     """
     Test Suite for /layers/lambdaDdbEnvLayer

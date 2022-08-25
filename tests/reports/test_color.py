@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 import boto3
 from botocore.exceptions import ClientError
-from moto import mock_dynamodb2
+from moto import mock_dynamodb
 
 # Common test helper utilities for setup
 from tests.env_setup_for_tests import env_setup_for_tests
@@ -25,7 +25,7 @@ from pylambda.layers.lambdaDdbEnv.python.lambdaDdbEnvLayer import EnvParams
 from pylambda.reports.color.app import get_ddb_data
 from pylambda.reports.color.app import lambda_handler
 
-@mock_dynamodb2
+@mock_dynamodb
 class TestReportsColor(unittest.TestCase):
     """
     Test Suite for /reports/filterpage
