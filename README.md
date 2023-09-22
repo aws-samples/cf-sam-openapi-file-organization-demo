@@ -1,4 +1,4 @@
-# Service Creation API Integration Demo
+# AWS API Integration Demo
 
 ## Demo Project Overview
 
